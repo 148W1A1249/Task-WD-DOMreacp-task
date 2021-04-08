@@ -84,7 +84,7 @@ var form_row = createEle('div','form-row align-self-center');
 data.forEach(obj=>{
     var col = createEle('div','form-group col-6');
     var label = createEle('label','font-weight-bold');
-    label.innerHTML=obj.LabelName;
+    label.innerHTML=`${obj.LabelName} <sup class='text-danger'>*</sup>`;
     label.setAttribute('for',obj.LabelName.split(' ').join(""));
     col.append(label);
     if(obj.type==='text'){
@@ -188,6 +188,9 @@ function getdata(){
         }
     ];
 
+//     if(firstName!=undefined && lastName!=undefined && gender!=undefined && address!=undefined && city!=undefined && state!=undefined && pincode!=undefined){
+//         buildTable(tab_data);
+//     }    
     buildTable(tab_data);
 
 }
