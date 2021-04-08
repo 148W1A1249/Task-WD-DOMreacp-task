@@ -188,10 +188,11 @@ function getdata(){
         }
     ];
 
-//     if(firstName!=undefined && lastName!=undefined && gender!=undefined && address!=undefined && city!=undefined && state!=undefined && pincode!=undefined){
-//         buildTable(tab_data);
-//     }    
-    buildTable(tab_data);
+    if(firstName!=undefined && lastName!=undefined && gender!=undefined && address!=undefined && city!=undefined && state!='undefined' && pincode!=undefined){
+        buildTable(tab_data);
+    }else{
+        alert("Please Fill The required fields..!");
+    }
 
 }
 
