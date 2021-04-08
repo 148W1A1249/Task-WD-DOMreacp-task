@@ -1,3 +1,30 @@
+function createEle(element,elemClass='',elemId=''){
+    var element = document.createElement(element);
+    element.setAttribute('class',elemClass);
+    element.setAttribute('id',elemId);
+return element;
+}
+
+function createInput(element,type,elemclass='',elemId='',elename='',eleval=''){
+    var element = document.createElement(element);
+    element.setAttribute('type',type);
+    element.setAttribute('class',elemclass);
+    element.setAttribute('id',elemId);
+    element.setAttribute('name',elename);
+    element.setAttribute('value',eleval);
+return element;
+}
+
+function createHead(arr){
+    var tr = document.createElement('tr');
+    arr.forEach(obj=>{
+        var th = document.createElement('th');
+        th.innerHTML= obj.LabelName;
+        tr.append(th);
+    })
+    return tr;
+}
+
 var data = [
     {
         "id": "1",
@@ -50,7 +77,7 @@ var data = [
     }
 ]
 
-var form_container = createEle('div','container');
+var form_container = createEle('div','container mt-4');
 var form = createEle('form')
 var form_row = createEle('div','form-row align-self-center');
 
@@ -97,17 +124,16 @@ data.forEach(obj=>{
     if(obj.type==='select'){
         var select_tag = createEle('select','form-control',obj.LabelName.split(' ').join(""));
         var option = createEle('option');
-        option.setAttribute('value','selected');
+        option.setAttribute('value','undefined');
         option.innerHTML='Select State';
         select_tag.append(option);
+
         for(var i=0;i<=obj.Labeldata.length;i++){
             var option = createEle('option');
             option.setAttribute('value',obj.Labeldata[i]);
             option.innerHTML= obj.Labeldata[i];
-
             select_tag.append(option);
-        }
-        
+        }        
         col.append(select_tag);
     }  
     form_row.append(col);
@@ -122,23 +148,6 @@ form.append(subbtn);
 form_container.append(form);
 document.body.append(form_container);
 
-
-function createEle(element,elemClass='',elemId=''){
-    var element = document.createElement(element);
-    element.setAttribute('class',elemClass);
-    element.setAttribute('id',elemId);
-return element;
-}
-
-function createInput(element,type,elemclass='',elemId='',elename='',eleval=''){
-    var element = document.createElement(element);
-    element.setAttribute('type',type);
-    element.setAttribute('class',elemclass);
-    element.setAttribute('id',elemId);
-    element.setAttribute('name',elename);
-    element.setAttribute('value',eleval);
-return element;
-}
 
 function getdata(){
     var firstName = document.getElementById('FirstName').value;
@@ -161,16 +170,8 @@ function getdata(){
     var pincode = document.getElementById('Pincode').value;
     var country = document.getElementById('Country').value;   
     
-    setTimeout(function(){
-        document.getElementById('FirstName').value = '';
-        document.getElementById('LastName').value = '';
-        document.getElementById('Address').value = '';
-        document.getElementById('City').value = '';
-        document.getElementById('State').value = '';
-        document.getElementById('Pincode').value = '';
-        document.getElementById('Country').value = '';
-        // window.location.reload()
-        
+    setTimeout(function(){       
+        document.querySelector('form').reset();        
     },1000)
 
     var tab_data =[
@@ -191,24 +192,15 @@ function getdata(){
 
 }
 
-function buildTable(arr){
-    
-    
-    var table_container = createEle('div','container');
-    var table = createEle('table','mt-3 table table-striped text-center','table_content');
-    var thead = createEle('thead','bg-dark');
-    thead.style.color="white";
-    var tbody = document.createElement('tbody');
+var table_container = createEle('div','container','table_container');
+var table = createEle('table','mt-5 table table-striped text-center','table_content');
+var thead = createEle('thead','bg-dark');
+thead.style.color="white";
+var th = createHead(data); 
+thead.appendChild(th); 
 
-    var th = document.createElement('tr');
-    var head = arr[0]; 
-    for(var key in head){
-        var td = document.createElement('th');
-        td.innerHTML=key;
-        
-        th.append(td);
-    } 
-    thead.appendChild(th); 
+function buildTable(arr){
+    var tbody = document.createElement('tbody');
     arr.forEach(obj => {     
         var tr = document.createElement('tr');   
         for(var key in obj){
@@ -219,7 +211,10 @@ function buildTable(arr){
         tbody.appendChild(tr);
     });
     table.append(thead,tbody);
-    table_container.append(table);
-    document.body.append(table_container);
+};
 
-}
+table_container.append(table);
+document.body.append(table_container);
+
+
+
